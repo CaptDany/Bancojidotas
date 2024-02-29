@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Bancojidotas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bancojidotas is a banking application that provides various functionalities for managing user accounts, bank accounts, and debit/credit cards. The application can be developed for desktop, web, or mobile platforms.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Registration**: Users can register with the application by providing necessary details.
+  
+- **Bank Account Management**:
+  - Registration of bank accounts
+  - Modification of bank account details
+  - Deletion of bank accounts
 
-### `npm start`
+- **Debit/Credit Card Management**:
+  - Registration of debit and credit cards
+  - Modification of card details
+  - Deletion of cards
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Transfer between Own Accounts**: Users can transfer funds between their own accounts.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **User Profile Management**: Users can update their personal information.
 
-### `npm test`
+## Architecture Evolution
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The application will evolve from a monolithic architecture to an 8-layered architecture. Each architecture will be implemented as an executable and independently verifiable product.
 
-### `npm run build`
+### Monolithic Architecture
+- Initial development will follow a monolithic architecture where all functionalities are tightly coupled within a single application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 3-Layered Architecture
+- The monolithic architecture will be refactored into a 3-layered architecture consisting of presentation, business logic, and data access layers.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 5-Layered Architecture
+- Further separation of concerns will be achieved by transitioning to a 5-layered architecture with the addition of service and domain layers.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 8-Layered Architecture
+- The final architecture will consist of 8 layers, including presentation, application, domain, infrastructure, persistence, service, interface adapters, and external components.
 
-### `npm run eject`
+## Task Assignments
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Each architecture evolution stage will have its task assignment on the designated platform for uploading corresponding evidence.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Monolithic Architecture**: Task assigned on [Platform A](example.com/task1)
+- **3-Layered Architecture**: Task assigned on [Platform B](example.com/task2)
+- **5-Layered Architecture**: Task assigned on [Platform C](example.com/task3)
+- **8-Layered Architecture**: Task assigned on [Platform D](example.com/task4)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To get started with Bancojidotas, follow the steps below:
 
-## Learn More
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Follow the setup instructions specific to your chosen platform and architecture.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Technologies Used
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Frontend: (To be decided based on the chosen platform)
+- Backend: (To be decided based on the chosen platform)
+- Database: (To be decided based on the chosen platform)
 
-### Code Splitting
+## Contributors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- [John Doe](https://github.com/johndoe)
+- [Jane Smith](https://github.com/janesmith)
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the [MIT License](LICENSE).

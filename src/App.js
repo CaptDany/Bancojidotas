@@ -2,6 +2,40 @@ import React, { useState } from 'react';
 import "./App.css";
 
 function App() {
+  // State variables for user data
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: ''
+  });
+
+  // Function to handle form submission for user data
+  const handleSubmitUserData = (event) => {
+    event.preventDefault();
+    // Logic to handle form submission (e.g., send data to backend)
+    console.log('User data submitted:', userData);
+    // Clear form fields after submission
+    setUserData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: ''
+    });
+  };
+
+  // Function to handle input changes for user data
+  const handleChangeUserData = (event) => {
+    const { name, value } = event.target;
+    setUserData({ ...userData, [name]: value });
+  };
+
   // State variables to manage user's bank accounts
   const [bankAccounts, setBankAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
@@ -55,6 +89,7 @@ function App() {
   };
 
   return (
+    <>
     <div>
       <h1>User Settings</h1>
       <h2>Bank Accounts</h2>
@@ -100,6 +135,72 @@ function App() {
         ))}
       </ul>
     </div>
+    <div>
+    <div>
+        <h2>User Data</h2>
+        {/* User data form */}
+        <form onSubmit={handleSubmitUserData}>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={userData.firstName}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={userData.lastName}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={userData.email}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone"
+            value={userData.phone}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={userData.address}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={userData.city}
+            onChange={handleChangeUserData}
+            required
+          />
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            value={userData.state}
+            onChange={handleChangeUserData}
+            required
+          />
+          <button type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+    </>
   );
 }
 

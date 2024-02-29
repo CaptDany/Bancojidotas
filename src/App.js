@@ -37,6 +37,24 @@ function Cards(){ //Tarjetas de credito y debito
           console.log("Card deleted successfully.");
       }
   };
+
+  const createNewCard = () => {
+    const randomCardNumber = Math.floor(Math.random() * 1000000000);
+    const accountNumbers = Object.keys(accounts);
+    if (accountNumbers.length === 0) {
+        console.log("No accounts available to create a card for.");
+    } else {
+        const randomAccountNumber = accountNumbers[Math.floor(Math.random() * accountNumbers.length)];
+        addCard(randomCardNumber, randomAccountNumber);
+    }
+    };
+
+  return (
+    <div>
+        <button onClick={createNewCard}>Create New Card</button>
+        <button onClick={() => deleteCard("987654321")}>Delete Card</button>
+    </div>
+);
 }
 
-export default App;
+export default Cards;

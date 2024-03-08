@@ -6,14 +6,15 @@ function App() {
 const [ signIn, setSignIn ] = useState(false);
 const [regUser, setRegUser] = useState('');
 const [regPass, setRegPass] = useState('');
-const users = []
+let users = [{uersname: 'admin', password: 'admin'}];
+
 
 
 
     if(!signIn){
         return(
         <div className="App">
-            {Me(regPass, regUser, setRegUser, setRegPass)}
+            {Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn, users)} 
         </div>
         );
     } else{
@@ -73,13 +74,30 @@ function Cards(){ //Tarjetas de credito y debito
   );
 }
 
-function Me(regPass, regUser, setRegUser, setRegPass){ 
+function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn,users){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const register = false
 
-    return(
-    <signIn>
-        <div className="App">
+    if(!register){
+        return(
+            <div>
+                <h1>Login Page!</h1>
+                <p>Please enter your username and password</p>
+                <input type="text" value={username} onChange={e => {setUsername(e.target.value);}}/> <br />
+                <input type="password" value={password} onChange={e => {setPassword(e.target.value);}}/> <br />
+                <button onClick={() => {
+                    if(username === users.find(user => user.username === username) && password === users.find(user => user.password === password)){
+                        setSignIn(true);
+                    }else{
+                        alert("Invalid Username or Password");
+                    }
+                }}>Submit</button>
+            </div>
+        )
+    }else{
+        return(
+            <div className="App">
             <div>
                 <h1>Register User</h1>
             </div>
@@ -105,9 +123,10 @@ function Me(regPass, regUser, setRegUser, setRegPass){
                 </form>
             </div>
         </div>
-    </signIn>
-    ) 
-}
+        )
+    }
+    
+};
 
 
 

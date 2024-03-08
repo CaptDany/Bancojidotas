@@ -6,7 +6,9 @@ function App() {
 const [ signIn, setSignIn ] = useState(false);
 const [regUser, setRegUser] = useState('');
 const [regPass, setRegPass] = useState('');
-let users = [{uersname: 'admin', password: 'admin'}];
+
+
+
 
 
 
@@ -14,7 +16,7 @@ let users = [{uersname: 'admin', password: 'admin'}];
     if(!signIn){
         return(
         <div className="App">
-            {Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn, users)} 
+            {Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn)} 
         </div>
         );
     } else{
@@ -74,17 +76,22 @@ function Cards(){ //Tarjetas de credito y debito
   );
 }
 
-function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn,users){
+
+function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn){
+    let users = [];
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const register = false
+    const [register, setRegister] = useState(false);
+    console.log(users);
 
     if(!register){
         return(
             <div>
                 <h1>Login Page!</h1>
                 <p>Please enter your username and password</p>
+                <label htmlFor='username'>Username</label><br />
                 <input type="text" value={username} onChange={e => {setUsername(e.target.value);}}/> <br />
+                <label htmlFor='Password'>Password</label><br />
                 <input type="password" value={password} onChange={e => {setPassword(e.target.value);}}/> <br />
                 <button onClick={() => {
                     if(username === users.find(user => user.username === username) && password === users.find(user => user.password === password)){
@@ -92,7 +99,10 @@ function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn,users){
                     }else{
                         alert("Invalid Username or Password");
                     }
-                }}>Submit</button>
+                }}>Log in</button>
+                <button onClick={() => {
+                    setRegister(true);
+                }}>Register</button>
             </div>
         )
     }else{
@@ -103,6 +113,7 @@ function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn,users){
             </div>
             <div>
                 <form>
+                    {console.log(users)}
                     <label for="username">Username</label><br/>
                     <input value={username} onChange={e => {setUsername(e.target.value);}}/>
                     <br/>
@@ -113,8 +124,16 @@ function Me(regPass, regUser, setRegUser, setRegPass,signIn, setSignIn,users){
                         e.preventDefault();
                         setRegUser(username);
                         setRegPass(password);
-                        console.log('username: ',username,'password: ', password);
+                        users.push({
+                            username: username,
+                            password: password
+                        })
+                        console.log('username: ',username,'password: ', password, 'Users: ', users);
                     }}>submit</button>
+                    <button 
+                    onClick={()=> {
+                        setRegister(true);
+                    }}>Log in</button>
                     <br/>
                     <h1>
                         Registered Username: {regUser}<br/>

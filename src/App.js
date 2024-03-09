@@ -8,7 +8,6 @@ function App() {
   const [password, setPassword] = useState("");
   const [currentPage, setCurrentPage] = useState("Login");
   const [users, setUsers] = useState([]);
-  //let users = [{ username: "123456", password: "123456" }];
 
   let content;
   if (isSignedIn) {
@@ -44,8 +43,10 @@ function App() {
 
 function Cards() {
   //Tarjetas de credito y debito
-  const [accounts, setAccounts] = useState({});
-  const [cards, setCards] = useState({});
+  const [accounts, setAccounts] = useState(['445464']);
+  const [cards, setCards] = useState([]);
+  const [cardNumber, setCardNumber] = useState([])
+  let card = 'abc';
 
   const addCard = (cardNumber, accountNumber) => {
     if (!(accountNumber in accounts)) {
@@ -72,7 +73,7 @@ function Cards() {
     }
   };
 
-  const createNewCard = () => {
+  const createNewCard = (cardNumber) => {
     const randomCardNumber = Math.floor(Math.random() * 1000000000);
     const accountNumbers = Object.keys(accounts);
     if (accountNumbers.length === 0) {
@@ -80,14 +81,37 @@ function Cards() {
     } else {
       const randomAccountNumber =
         accountNumbers[Math.floor(Math.random() * accountNumbers.length)];
-      addCard(randomCardNumber, randomAccountNumber);
+      addCard(cardNumber, randomAccountNumber);
     }
+    console.log(cards);
   };
 
+  const showCards = () => {
+    const cardlist = cards.map();
+    card = cardlist[0];
+    return (
+      <div>
+        <ul>{card}
+        {console.log(card)}
+        </ul>
+      </div>
+    );
+  };
   return (
     <div>
-      <button onClick={createNewCard}>Create New Card</button>
+      <label htmlFor="Card number">Enter your card number</label><br />
+      <input 
+      type="CardNumber"
+      value={cardNumber}
+      onChange={(e) => {
+        setCardNumber(e.target.value)
+      }}/><br />
+      <button onClick={() => createNewCard(cardNumber)}>Create New Card</button>
       <button onClick={() => deleteCard("987654321")}>Delete Card</button>
+      <div>
+        {showCards}
+        <ul>swagggg</ul>
+      </div>
     </div>
   );
 }
@@ -217,12 +241,6 @@ function Register({
             Log in
           </button>
           <br />
-          <h1>
-            Registered Username: {username}
-            <br />
-            Registered Password: {password}
-            <br />
-          </h1>
         </form>
       </div>
     </div>

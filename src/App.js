@@ -43,39 +43,46 @@ function App() {
 
 function Cards() {
   //Tarjetas de credito y debito
-  const [accounts, setAccounts] = useState(['445464']);
+  const [accounts, setAccounts] = useState(["445464"]);
   const [cards, setCards] = useState([]);
-  const [cardNumber, setCardNumber] = useState([])
-  let card = 'abc';
-
+  const [cardNumber, setCardNumber] = useState([]);
+  const [id, setId] = useState(0);
   const addCard = (cardNumber, accountNumber) => {
-    if (!(accountNumber in accounts)) {
+    if (!accounts.includes(accountNumber)) {
       console.log("Account does not exist.");
     } else if (cardNumber in cards) {
       console.log("Card already exists.");
     } else {
-      setCards((prevCards) => ({
+      setCards((prevCards) => [
         ...prevCards,
-        [cardNumber]: { cardNumber, accountNumber },
-      }));
+        {
+          cardNumber: cardNumber,
+          accountNumber: accountNumber,
+          id: id,
+        },
+      ]);
+      setId(cards.length + 1);
       console.log("Card added successfully.");
     }
   };
 
-  const deleteCard = (cardNumber) => {
-    if (!(cardNumber in cards)) {
-      console.log("Card does not exist.");
-    } else {
-      const updatedCards = { ...cards };
-      delete updatedCards[cardNumber];
+  const deleteCard = () => {
+    const selectedId = document.querySelector('input[name="card"]:checked').id;
+    const cardIndex = cards.findIndex(
+      (card) => card.id === parseInt(selectedId)
+    );
+    if (cardIndex !== -1) {
+      const updatedCards = [...cards];
+      updatedCards.splice(cardIndex, 1);
       setCards(updatedCards);
       console.log("Card deleted successfully.");
+    } else {
+      console.log("Card does not exist.");
     }
   };
 
   const createNewCard = (cardNumber) => {
-    const randomCardNumber = Math.floor(Math.random() * 1000000000);
-    const accountNumbers = Object.keys(accounts);
+    const accountNumbers = [...accounts]; // make a copy of the array so we don't mutate the original
     if (accountNumbers.length === 0) {
       console.log("No accounts available to create a card for.");
     } else {
@@ -86,32 +93,29 @@ function Cards() {
     console.log(cards);
   };
 
-  const showCards = () => {
-    const cardlist = cards.map();
-    card = cardlist[0];
-    return (
-      <div>
-        <ul>{card}
-        {console.log(card)}
-        </ul>
-      </div>
-    );
-  };
+  const showCards = cards.map((card) => (
+    <div key={card.id}>
+      <input type="radio" id={card.id} name="card" value={card.id} />
+      <label htmlFor={card.id}>Card Number: {card.cardNumber}</label> <br />
+    </div>
+  ));
   return (
     <div>
-      <label htmlFor="Card number">Enter your card number</label><br />
-      <input 
-      type="CardNumber"
-      value={cardNumber}
-      onChange={(e) => {
-        setCardNumber(e.target.value)
-      }}/><br />
+      <label htmlFor="Card number">Enter your card number</label>
+      <br />
+      <input
+        type="text"
+        value={cardNumber}
+        onChange={(e) => {
+          setCardNumber(e.target.value);
+        }}
+      />
+      <br />
       <button onClick={() => createNewCard(cardNumber)}>Create New Card</button>
-      <button onClick={() => deleteCard("987654321")}>Delete Card</button>
-      <div>
-        {showCards}
-        <ul>swagggg</ul>
-      </div>
+      <button onClick={deleteCard}>Delete Card</button>
+      <button onClick={() => console.log(cards)}>Show Cards</button>
+      <br />
+      <div>{showCards}</div>
     </div>
   );
 }

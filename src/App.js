@@ -9,36 +9,28 @@ function App() {
   const [currentPage, setCurrentPage] = useState("Login");
   const [users, setUsers] = useState([]);
 
-  let content;
-  if (isSignedIn) {
-    content = <Cards />;
-  } else if (currentPage === "Register") {
-    content = (
-      <Register
-        users={users}
-        setUsers={setUsers}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-        setCurrentPage={setCurrentPage}
-      />
-    );
-  } else {
-    content = (
-      <Login
-        users={users}
-        setUsers={setUsers}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-        setCurrentPage={setCurrentPage}
-      />
-    );
-  }
 
-  return <div className="App">{content}</div>;
+  switch (currentPage) {
+    case "Login": return <Login 
+      users={users} 
+      setUsers={setUsers} 
+      username={username} 
+      setUsername={setUsername} 
+      password={password} 
+      setPassword={setPassword} 
+      setCurrentPage={setCurrentPage} />;
+    case "Register": return <Register 
+      users={users} 
+      setUsers={setUsers} 
+      username={username} 
+      setUsername={setUsername} 
+      password={password} 
+      setPassword={setPassword} 
+      setCurrentPage={setCurrentPage} />;
+    case 'Cards': return <Cards />
+    default:
+      return null;
+  }
 }
 
 function Cards() {
@@ -100,7 +92,7 @@ function Cards() {
     </div>
   ));
   return (
-    <div>
+    <div className="App">
       <label htmlFor="Card number">Enter your card number</label>
       <br />
       <input
@@ -123,14 +115,13 @@ function Cards() {
 function Login({
   setCurrentPage,
   users,
-  setUsers,
   username,
   setUsername,
   password,
   setPassword,
 }) {
   return (
-    <div>
+    <div className="App">
       <h1>Login Page!</h1>
       <p>Please enter your username and password</p>
       <label htmlFor="username">Username</label>
@@ -178,7 +169,7 @@ function Login({
           setCurrentPage("Register");
         }}
       >
-        Register
+        Create account
       </button>
     </div>
   );
@@ -197,6 +188,7 @@ function Register({
     <div className="App">
       <div>
         <h1>Register User</h1>
+        <p>Please create a username and password</p>
       </div>
       <div>
         <form>
@@ -233,7 +225,7 @@ function Register({
               console.log(users);
             }}
           >
-            submit
+            Save
           </button>
           <button
             onClick={(e) => {
@@ -242,7 +234,7 @@ function Register({
               //setRegister(true);
             }}
           >
-            Log in
+            Back to Login
           </button>
           <br />
         </form>

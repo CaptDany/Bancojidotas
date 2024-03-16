@@ -17,7 +17,7 @@ function UserModification() {
   const fetchUserData = async () => {
     try {
       // Suponiendo que el id del usuario esté disponible en algún contexto
-      const userId = getUserId(); // Esta función debe ser definida para obtener el ID del usuario actual
+      //const userId = getUserId(); // Esta función debe ser definida para obtener el ID del usuario actual
       const response = await axios.get(`/api/users/${userId}`);
       setUserData(response.data);
     } catch (error) {
@@ -35,7 +35,7 @@ function UserModification() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const userId = getUserId(); // Obtener el ID del usuario actual
+      //const userId = getUserId(); // Obtener el ID del usuario actual
       await axios.put(`/api/users/${userId}`, userData);
       // Puedes mostrar un mensaje de éxito o redireccionar a otra página después de la modificación
       console.log('Datos del usuario modificados con éxito');

@@ -30,7 +30,10 @@ function App() {
       setCurrentPage={setCurrentPage} />
     case 'Dany': return <Daniel 
       setCurrentPage={setCurrentPage} />
-    case 'Ruben': return <UserModification setCurrentPage={setCurrentPage} />
+    case 'Ruben': return <UserModification
+      users={users} 
+      setUsers={setUsers} 
+      setCurrentPage={setCurrentPage} />
     default:
       return null;
   }
@@ -207,7 +210,7 @@ function Register({
       </div>
       <div>
         <form>
-          <label for="username">Username</label>
+          <label htmlFor="username">Username</label>
           <br />
           <input
             value={username}
@@ -216,7 +219,7 @@ function Register({
             }}
           />
           <br />
-          <label for="pass">Password</label>
+          <label htmlFor="pass">Password</label>
           <br />
           <input
             onChange={(e) => {
@@ -465,7 +468,11 @@ function Daniel({setCurrentPage}) {
   );
 }
 
-function UserModification({setCurrentPage}) {
+function UserModification({
+  setCurrentPage,
+  users,
+  setUsers
+}) {
   const [userData, setUserData] = useState({
     id: '',
     name: '',
@@ -480,10 +487,10 @@ function UserModification({setCurrentPage}) {
 
   const fetchUserData = async () => {
     try {
-      // Suponiendo que el id del usuario esté disponible en algún contexto
+      //Suponiendo que el id del usuario esté disponible en algún contexto
       //const userId = getUserId(); // Esta función debe ser definida para obtener el ID del usuario actual
       //const response = await axios.get(`/api/users/${userId}`);
-      //setUserData(response.data);
+      ///setUserData(response.data);
     } catch (error) {
       console.error('Error al obtener los datos del usuario:', error);
     }
@@ -507,6 +514,13 @@ function UserModification({setCurrentPage}) {
       console.error('Error al modificar los datos del usuario:', error);
     }
   };
+  const showUsers = users.map((user) => (
+    <div key={user.username}>
+      <input type="radio" id={user.username} name="card" value={user.username} />
+      <label htmlFor={user.username}>User: {user.username}</label> <br />
+      <label htmlFor={user.password}>Password: {user.password}</label><br />
+    </div>
+  ));
 
   return (
     <div>
@@ -516,7 +530,8 @@ function UserModification({setCurrentPage}) {
         <input type="email" name="email" placeholder="Correo Electrónico" value={userData.email} onChange={handleInputChange} required />
         {/* Agrega más campos según las necesidades de tu aplicación */}
         <button type="submit">Guardar Cambios</button>
-      </form>
+      </form><br />
+      {users[0]}
     </div>
   );
 }

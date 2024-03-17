@@ -35,7 +35,7 @@ function App() {
       currentUser={currentUser}/>;
     case 'Cards': return <Cards
       setCurrentPage={setCurrentPage} />
-    case 'Dany': return <Daniel 
+    case 'Dany': return <UserSettings 
       setCurrentPage={setCurrentPage} />
     case 'Ruben': return <UserModification
       users={users} 
@@ -50,9 +50,9 @@ function Home({setCurrentPage, currentUser}) {
   return (
     <div className="Home">
       <h1>Welcome, {currentUser}</h1>
-      <button onClick={() => setCurrentPage("Cards")}>Cards</button>
-      <button onClick={() => setCurrentPage("Dany")}>Dany</button>
-      <button onClick={() => setCurrentPage("Ruben")}>Ruben</button>
+      <button onClick={() => setCurrentPage("Cards")}>Your cards</button>
+      <button onClick={() => setCurrentPage("Dany")}>Account information</button>
+      <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
       <button onClick={() => setCurrentPage("Login")}>Log out</button>
     </div>
   );
@@ -120,9 +120,10 @@ function Cards({setCurrentPage}) {
     <div className="App">
       <div className="nav-bar">
         <button onClick={() => {setCurrentPage("Home")}}>Home</button>
-        <button onClick={() => {setCurrentPage("Dany")}}>Dany</button>
-        <button onClick={() => {setCurrentPage("Ruben")}}>Ruben</button>
-        <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+        <button onClick={() => setCurrentPage("Cards")}>Your cards</button>
+        <button onClick={() => setCurrentPage("Dany")}>Account information</button>
+        <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
+        <button onClick={() => setCurrentPage("Login")}>Log out</button>
       </div>
       <h1>Modify/delete cards</h1>
       <label htmlFor="Card number">Enter your card number</label>
@@ -160,21 +161,19 @@ function Login({
         <p>Please enter your username and password</p>
         <div className="Form-body">
           <div className="Form-inputs">
-            <label htmlFor="username">Username</label>
             <br />
             <input
               type="text"
-              value={username}
+              placeholder="Username"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
             />{" "}
             <br />
-            <label htmlFor="Password">Password</label>
             <br />
             <input
               type="password"
-              value={password}
+              placeholder="Password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -195,10 +194,10 @@ function Login({
               if (user) {
                 e.preventDefault();
                 setCurrentPage("Home");
-                setCurrentUser(username);
               } else {
                 alert("Invalid Username or Password");
               }
+              setCurrentUser(username);
             }}
           >
             Log in
@@ -236,23 +235,26 @@ function Register({
         <p>Please create a username and password</p>
         <div className="Form-body">
           <div className="Form-inputs">
-            <label htmlFor="fullName"> Full Name</label><br />
-            <input value={fullName} onChange={(e) => {
-              setFullName(e.target.value);
-            }} /><br />
-            <label htmlFor="username">Username</label><br />
             <input
-              value={username}
+              type="text"
+              placeholder="Full name"
+              onChange={(e) => {
+                setFullName(e.target.value);
+            }} /><br /><br />
+            <input
+              type="text"
+              placeholder="Username"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-            /><br />
-            <label htmlFor="pass">Password</label><br />
+            /><br /><br />
             <input
+              type="password"
+              placeholder="Password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-            /><br />
+            />
             </div>
             <div className="Form-button">
 
@@ -293,7 +295,7 @@ function Register({
 }
 
 
-function Daniel({setCurrentPage}) {
+function UserSettings({setCurrentPage}) {
   // State variables for user data
   const [userData, setUserData] = useState({
     firstName: '',
@@ -383,121 +385,126 @@ function Daniel({setCurrentPage}) {
 
   return (
     <>
-    <div>
       <div className="nav-bar">
-          <button onClick={() => {setCurrentPage("Home")}}>Home</button>
-          <button onClick={() => {setCurrentPage("Cards")}}>Cards</button>
-          <button onClick={() => {setCurrentPage("Ruben")}}>Ruben</button>
-          <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+        <button onClick={() => {setCurrentPage("Home")}}>Home</button>
+        <button onClick={() => setCurrentPage("Cards")}>Your cards</button>
+        <button onClick={() => setCurrentPage("Dany")}>Account information</button>
+        <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
+        <button onClick={() => setCurrentPage("Login")}>Log out</button>
       </div>
-      <h1>User Settings</h1>
-      <h2>Bank Accounts</h2>
-      <form onSubmit={editingIndex !== null ? handleEdit : handleRegister}>
-        <input
-          type="text"
-          name="accountNumber"
-          placeholder="Account Number"
-          value={newAccount.accountNumber}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="transferNumber"
-          placeholder="Transfer Number"
-          value={newAccount.transferNumber}
-          onChange={handleChange}
-          required
-        />
-        <select
-          name="bank"
-          value={newAccount.bank}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select Bank</option>
-          <option value="Banamex">Banamex</option>
-          <option value="American Express">American Express</option>
-          <option value="Wells Fargo">Wells Fargo</option>
-        </select>
-        <button type="submit">{editingIndex !== null ? 'Save' : 'Register'}</button>
-      </form>
-      <ul>
-        {bankAccounts.map((account, index) => (
-          <li key={index}>
-            <span>Account Number: {account.accountNumber}</span>
-            <span>Transfer Number: {account.transferNumber}</span>
-            <span>Bank: {account.bank}</span>
-            <button onClick={() => handleEditClick(index)}>Edit</button>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div>
-    <div>
-        <h2>User Data</h2>
-        <form onSubmit={handleSubmitUserData}>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            value={userData.firstName}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            value={userData.lastName}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={userData.email}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone"
-            value={userData.phone}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            value={userData.address}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={userData.city}
-            onChange={handleChangeUserData}
-            required
-          />
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            value={userData.state}
-            onChange={handleChangeUserData}
-            required
-          />
-          <button type="submit">Save</button><br />
-          <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
-          <button onClick={() => {setCurrentPage("Home")}}>Home page</button>
-        </form>
+    <div className="user">
+      <div className="user-settings">
+        <div className="user-settings-input">
+          <h1>User Settings</h1>
+          <h2>Bank Accounts</h2>
+          <form onSubmit={editingIndex !== null ? handleEdit : handleRegister}>
+            <input
+              type="text"
+              name="accountNumber"
+              placeholder="Account Number"
+              value={newAccount.accountNumber}
+              onChange={handleChange}
+              required
+            /><br />
+            <input
+              type="text"
+              name="transferNumber"
+              placeholder="Transfer Number"
+              value={newAccount.transferNumber}
+              onChange={handleChange}
+              required
+            /><br />
+            <select
+              name="bank"
+              value={newAccount.bank}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Bank</option>
+              <option value="Banamex">Banamex</option>
+              <option value="American Express">American Express</option>
+              <option value="Wells Fargo">Wells Fargo</option>
+            </select><br />
+            <button type="submit">{editingIndex !== null ? 'Save' : 'Register'}</button>
+          </form>
+        </div>
+        <div className="user-settings-list">
+          <ul>
+            {bankAccounts.map((account, index) => (
+              <li key={index}>
+                <span>Account Number: {account.accountNumber}</span><br />
+                <span>Transfer Number: {account.transferNumber}</span><br />
+                <span>Bank: {account.bank}</span><br />
+                <button onClick={() => handleEditClick(index)}>Edit</button><br />
+                <button onClick={() => handleDelete(index)}>Delete</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div>
+      <div className="user-data">
+          <h2>User Data</h2>
+          <form onSubmit={handleSubmitUserData}>
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={userData.firstName}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={userData.lastName}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={userData.email}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone"
+              value={userData.phone}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={userData.address}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={userData.city}
+              onChange={handleChangeUserData}
+              required
+            />
+            <input
+              type="text"
+              name="state"
+              placeholder="State"
+              value={userData.state}
+              onChange={handleChangeUserData}
+              required
+            />
+            <button type="submit">Save</button><br />
+          </form>
+        </div>
       </div>
     </div>
     </>
@@ -532,8 +539,9 @@ function UserModification({
     <div className="Ruben">
       <div className="nav-bar">
         <button onClick={() => {setCurrentPage("Home")}}>Home</button>
-        <button onClick={() => {setCurrentPage("Cards")}}>Cards</button>
-        <button onClick={() => {setCurrentPage("Dany")}}>Dany</button>
+        <button onClick={() => {setCurrentPage("Cards")}}>Your cards</button>
+        <button onClick={() => {setCurrentPage("Dany")}}>Account information</button>
+        <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
         <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
       </div>
       <h1>Modificación de Datos del Usuario</h1>
@@ -546,8 +554,6 @@ function UserModification({
         </tr>
         {showUsers}<br />
       </table>
-      <button onClick={() => setCurrentPage("Login")}>Log out</button>
-      <button onClick={() => setCurrentPage("Home")}>Home page</button>
     </div>
   );
 }

@@ -139,14 +139,6 @@ function Cards({setCurrentPage}) {
       <button onClick={deleteCard}>Delete Card</button>
       <button onClick={() => console.log(cards)}>Show Cards</button>
       <br />
-      <button onClick={(e) => {
-        e.preventDefault() 
-        setCurrentPage("Home")}}>
-        Home page
-      </button>
-      <button onClick={(e) => {
-        e.preventDefault() 
-        setCurrentPage("Login")}}>Log out</button><br />
       <div>{showCards}</div>
     </div>
   );

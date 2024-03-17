@@ -111,13 +111,13 @@ function Cards({setCurrentPage}) {
   };
 
   const showCards = cards.map((card) => (
-    <div key={card.id}>
+    <div className='cards-showcards' key={card.id}>
       <input type="radio" id={card.id} name="card" value={card.id} />
       <label htmlFor={card.id}>Card Number: {card.cardNumber}</label> <br />
     </div>
   ));
   return (
-    <div className="App">
+    <>
       <div className="nav-bar">
         <button onClick={() => {setCurrentPage("Home")}}>Home</button>
         <button onClick={() => setCurrentPage("Cards")}>Your cards</button>
@@ -125,23 +125,26 @@ function Cards({setCurrentPage}) {
         <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
         <button onClick={() => setCurrentPage("Login")}>Log out</button>
       </div>
-      <h1>Modify/delete cards</h1>
-      <label htmlFor="Card number">Enter your card number</label>
-      <br />
-      <input
-        type="text"
-        value={cardNumber}
-        onChange={(e) => {
-          setCardNumber(e.target.value);
-        }}
-      />
-      <br />
-      <button onClick={() => createNewCard(cardNumber)}>Create New Card</button>
-      <button onClick={deleteCard}>Delete Card</button>
-      <button onClick={() => console.log(cards)}>Show Cards</button>
-      <br />
-      <div>{showCards}</div>
-    </div>
+      <div className="cards">
+        <div className="cards-input">
+          <h1>Modify & delete cards</h1>
+          <label htmlFor="Card number">Enter your card number</label><br />
+          <input
+            type="text"
+            value={cardNumber}
+            onChange={(e) => {
+              setCardNumber(e.target.value);
+            }}
+          />
+          <br />
+          <button onClick={() => createNewCard(cardNumber)}>Create New Card</button>
+          <button onClick={deleteCard}>Delete Card</button><br />
+        </div>
+        <div className="cards-list">
+          {showCards}
+        </div>
+      </div>
+    </>
   );
 }
 

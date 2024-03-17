@@ -6,6 +6,7 @@ import axios from 'axios';
 function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [currentPage, setCurrentPage] = useState("Login");
   const [users, setUsers] = useState([]);
 
@@ -25,7 +26,9 @@ function App() {
       setUsername={setUsername} 
       password={password} 
       setPassword={setPassword} 
-      setCurrentPage={setCurrentPage} />;
+      setCurrentPage={setCurrentPage}
+      fullName={fullName}
+      setFullName={setFullName} />;
     case 'Cards': return <Cards
       setCurrentPage={setCurrentPage} />
     case 'Dany': return <Daniel 
@@ -201,7 +204,10 @@ function Register({
   setUsername,
   password,
   setPassword,
+  fullName,
+  setFullName
 }) {
+  const [id, setId] = useState(0);
   return (
     <div className="App">
       <div>
@@ -210,23 +216,23 @@ function Register({
       </div>
       <div>
         <form>
-          <label htmlFor="username">Username</label>
-          <br />
+          <label htmlFor="fullName"> Full Name</label><br />
+          <input value={fullName} onChange={(e) => {
+            setFullName(e.target.value);
+          }} /><br />
+          <label htmlFor="username">Username</label><br />
           <input
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
-          />
-          <br />
-          <label htmlFor="pass">Password</label>
-          <br />
+          /><br />
+          <label htmlFor="pass">Password</label><br />
           <input
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-          />
-          <br />
+          /><br />
           <button
             type="submit"
             onClick={(e) => {
@@ -236,10 +242,13 @@ function Register({
               setUsers((users) => [
                 ...users,
                 {
+                  fullname: fullName,
                   username: username,
                   password: password,
+                  id: id
                 },
               ]);
+              setId(id + 1);
               console.log(users);
             }}
           >
@@ -252,8 +261,7 @@ function Register({
             }}
           >
             Back to Login
-          </button>
-          <br />
+          </button><br />
         </form>
       </div>
     </div>
@@ -480,21 +488,9 @@ function UserModification({
     // Otros campos de usuario que necesites modificar
   });
 
-  useEffect(() => {
-    // Cargar los datos del usuario al montar el componente
-    fetchUserData();
-  }, []);
+  const [modUser, setModUser] = useState("");
+  const [modPass, setModPass] = useState("");
 
-  const fetchUserData = async () => {
-    try {
-      //Suponiendo que el id del usuario esté disponible en algún contexto
-      //const userId = getUserId(); // Esta función debe ser definida para obtener el ID del usuario actual
-      //const response = await axios.get(`/api/users/${userId}`);
-      ///setUserData(response.data);
-    } catch (error) {
-      console.error('Error al obtener los datos del usuario:', error);
-    }
-  };
 
   const handleInputChange = (event) => {
     setUserData({
@@ -514,24 +510,40 @@ function UserModification({
       console.error('Error al modificar los datos del usuario:', error);
     }
   };
-  const showUsers = users.map((user) => (
-    <div key={user.username}>
-      <input type="radio" id={user.username} name="card" value={user.username} />
-      <label htmlFor={user.username}>User: {user.username}</label> <br />
-      <label htmlFor={user.password}>Password: {user.password}</label><br />
-    </div>
-  ));
-
+const showUsers = users.map((user) => (
+    <tr key={user.id}>
+      <td>{user.id}</td>
+      <td>{user.fullname}</td>
+      <td>{user.username}</td>
+      <td>{user.password}</td>
+      <input value={users.username} onChange={(e) => setModUser(e.target.value)} />
+      <input value={users.password} onChange={(e) => setModPass(e.target.value)} />
+      <button onClick={(e) =>{
+        e.preventDefault();
+        const userIndex = users.findIndex((u) => u.id === user.id);
+        const updatedUsers = [...users];
+        updatedUsers.splice(userIndex, 1, { ...user, username: modUser, password: modPass });
+        setUsers(updatedUsers);
+        }}>Edit</button>
+    </tr>
+));
   return (
-    <div>
+    <div className="Ruben">
       <h1>Modificación de Datos del Usuario</h1>
       <form onSubmit={handleFormSubmit}>
         <input type="text" name="name" placeholder="Nombre" value={userData.name} onChange={handleInputChange} required />
         <input type="email" name="email" placeholder="Correo Electrónico" value={userData.email} onChange={handleInputChange} required />
-        {/* Agrega más campos según las necesidades de tu aplicación */}
         <button type="submit">Guardar Cambios</button>
       </form><br />
-      {users[0]}
+      <table>
+        <tr>
+          <th> ID </th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Password</th>
+        </tr>
+        {showUsers}
+      </table>
     </div>
   );
 }

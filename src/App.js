@@ -1,6 +1,5 @@
 import "./App.css";
 import React, { useState,useEffect } from "react";
-import axios from 'axios';
 
 
 function App() {
@@ -8,6 +7,7 @@ function App() {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [currentPage, setCurrentPage] = useState("Login");
+  const [currentUser, setCurrentUser] = useState("");
   const [users, setUsers] = useState([]);
 
   switch (currentPage) {
@@ -18,7 +18,8 @@ function App() {
       setUsername={setUsername} 
       password={password} 
       setPassword={setPassword} 
-      setCurrentPage={setCurrentPage} />;
+      setCurrentPage={setCurrentPage}
+      setCurrentUser={setCurrentUser} />;
     case "Register": return <Register 
       users={users} 
       setUsers={setUsers} 
@@ -29,6 +30,9 @@ function App() {
       setCurrentPage={setCurrentPage}
       fullName={fullName}
       setFullName={setFullName} />;
+    case 'Home' : return <Home 
+      setCurrentPage={setCurrentPage} 
+      currentUser={currentUser}/>;
     case 'Cards': return <Cards
       setCurrentPage={setCurrentPage} />
     case 'Dany': return <Daniel 
@@ -40,6 +44,18 @@ function App() {
     default:
       return null;
   }
+}
+
+function Home({setCurrentPage, currentUser}) {
+  return (
+    <div className="Home">
+      <h1>Welcome, {currentUser}</h1>
+      <button onClick={() => setCurrentPage("Cards")}>Cards</button>
+      <button onClick={() => setCurrentPage("Dany")}>Dany</button>
+      <button onClick={() => setCurrentPage("Ruben")}>Ruben</button>
+      <button onClick={() => setCurrentPage("Login")}>Log out</button>
+    </div>
+  );
 }
 
 function Cards({setCurrentPage}) {
@@ -102,6 +118,13 @@ function Cards({setCurrentPage}) {
   ));
   return (
     <div className="App">
+      <div className="nav-bar">
+        <button onClick={() => {setCurrentPage("Home")}}>Home</button>
+        <button onClick={() => {setCurrentPage("Dany")}}>Dany</button>
+        <button onClick={() => {setCurrentPage("Ruben")}}>Ruben</button>
+        <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+      </div>
+      <h1>Modify/delete cards</h1>
       <label htmlFor="Card number">Enter your card number</label>
       <br />
       <input
@@ -118,7 +141,9 @@ function Cards({setCurrentPage}) {
       <br />
       <button onClick={(e) => {
         e.preventDefault() 
-        setCurrentPage("Dany")}}>Daniel's Page</button><br />
+        setCurrentPage("Home")}}>
+        Home page
+      </button>
       <button onClick={(e) => {
         e.preventDefault() 
         setCurrentPage("Login")}}>Log out</button><br />
@@ -134,64 +159,68 @@ function Login({
   setUsername,
   password,
   setPassword,
+  setCurrentUser
 }) {
   return (
-    <div className="Login">
-      <h1>Login Page!</h1>
-      <p>Please enter your username and password</p>
-      <label htmlFor="username">Username</label>
-      <br />
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />{" "}
-      <br />
-      <label htmlFor="Password">Password</label>
-      <br />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />{" "}
-      <br />
-      <br />
-      <button
-        onClick={(e) => {
-          const user = users.find(
-            (user) => user.username === username && user.password === password
-          );
-          console.log(username);
-          console.log(password);
-          console.log(user);
-          if (user) {
-            e.preventDefault();
-            setCurrentPage("Cards");
-          } else {
-            alert("Invalid Username or Password");
-          }
-        }}
-      >
-        Log in
-      </button>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setCurrentPage("Register");
-        }}
-      >
-        Create account
-      </button>
-      <button
-        onClick={() => {
-          setCurrentPage('Ruben')
-        }}>
-          Ruberto
-        </button>
+    <div className="Form">
+      <div className="Form-head">
+        <h1>Login Page!</h1>
+        <p>Please enter your username and password</p>
+        <div className="Form-body">
+          <div className="Form-inputs">
+            <label htmlFor="username">Username</label>
+            <br />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />{" "}
+            <br />
+            <label htmlFor="Password">Password</label>
+            <br />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />{" "}
+          </div>
+          <br /><br />
+          <div className="Form-button">
+
+          </div>
+          <button
+            onClick={(e) => {
+              const user = users.find(
+                (user) => user.username === username && user.password === password
+              );
+              console.log(username);
+              console.log(password);
+              console.log(user);
+              if (user) {
+                e.preventDefault();
+                setCurrentPage("Home");
+                setCurrentUser(username);
+              } else {
+                alert("Invalid Username or Password");
+              }
+            }}
+          >
+            Log in
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage("Register");
+            }}
+          >
+            Create account
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -209,60 +238,63 @@ function Register({
 }) {
   const [id, setId] = useState(0);
   return (
-    <div className="App">
-      <div>
+    <div className="Form">
+      <div className="Form-head">
         <h1>Register User</h1>
         <p>Please create a username and password</p>
-      </div>
-      <div>
-        <form>
-          <label htmlFor="fullName"> Full Name</label><br />
-          <input value={fullName} onChange={(e) => {
-            setFullName(e.target.value);
-          }} /><br />
-          <label htmlFor="username">Username</label><br />
-          <input
-            value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          /><br />
-          <label htmlFor="pass">Password</label><br />
-          <input
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          /><br />
-          <button
-            type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              setUsername(username);
-              setPassword(password);
-              setUsers((users) => [
-                ...users,
-                {
-                  fullname: fullName,
-                  username: username,
-                  password: password,
-                  id: id
-                },
-              ]);
-              setId(id + 1);
-              console.log(users);
-            }}
-          >
-            Save
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setCurrentPage("Login");
-            }}
-          >
-            Back to Login
-          </button><br />
-        </form>
+        <div className="Form-body">
+          <div className="Form-inputs">
+            <label htmlFor="fullName"> Full Name</label><br />
+            <input value={fullName} onChange={(e) => {
+              setFullName(e.target.value);
+            }} /><br />
+            <label htmlFor="username">Username</label><br />
+            <input
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            /><br />
+            <label htmlFor="pass">Password</label><br />
+            <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            /><br />
+            </div>
+            <div className="Form-button">
+
+            </div>
+            <button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                setUsername(username);
+                setPassword(password);
+                setUsers((users) => [
+                  ...users,
+                  {
+                    fullname: fullName,
+                    username: username,
+                    password: password,
+                    id: id
+                  },
+                ]);
+                setId(id + 1);
+                console.log(users);
+              }}
+            >
+              Save
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentPage("Login");
+              }}
+            >
+              Back to Login
+            </button><br />
+        </div>
       </div>
     </div>
   );
@@ -360,6 +392,12 @@ function Daniel({setCurrentPage}) {
   return (
     <>
     <div>
+      <div className="nav-bar">
+          <button onClick={() => {setCurrentPage("Home")}}>Home</button>
+          <button onClick={() => {setCurrentPage("Cards")}}>Cards</button>
+          <button onClick={() => {setCurrentPage("Ruben")}}>Ruben</button>
+          <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+      </div>
       <h1>User Settings</h1>
       <h2>Bank Accounts</h2>
       <form onSubmit={editingIndex !== null ? handleEdit : handleRegister}>
@@ -407,7 +445,6 @@ function Daniel({setCurrentPage}) {
     <div>
     <div>
         <h2>User Data</h2>
-        {/* User data form */}
         <form onSubmit={handleSubmitUserData}>
           <input
             type="text"
@@ -466,9 +503,8 @@ function Daniel({setCurrentPage}) {
             required
           />
           <button type="submit">Save</button><br />
-          <button onClick={(e) => {
-        e.preventDefault() 
-        setCurrentPage("Login")}}>Log out</button><br />
+          <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+          <button onClick={() => {setCurrentPage("Home")}}>Home page</button>
         </form>
       </div>
     </div>
@@ -481,60 +517,34 @@ function UserModification({
   users,
   setUsers
 }) {
-  const [userData, setUserData] = useState({
-    id: '',
-    name: '',
-    email: '',
-    // Otros campos de usuario que necesites modificar
-  });
-
   const [modUser, setModUser] = useState("");
   const [modPass, setModPass] = useState("");
-
-
-  const handleInputChange = (event) => {
-    setUserData({
-      ...userData,
-      [event.target.name]: event.target.value
-    });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      //const userId = getUserId(); // Obtener el ID del usuario actual
-      //await axios.put(`/api/users/${userId}`, userData);
-      // Puedes mostrar un mensaje de éxito o redireccionar a otra página después de la modificación
-      console.log('Datos del usuario modificados con éxito');
-    } catch (error) {
-      console.error('Error al modificar los datos del usuario:', error);
-    }
-  };
-const showUsers = users.map((user) => (
-    <tr key={user.id}>
-      <td>{user.id}</td>
-      <td>{user.fullname}</td>
-      <td>{user.username}</td>
-      <td>{user.password}</td>
-      <input value={users.username} onChange={(e) => setModUser(e.target.value)} />
-      <input value={users.password} onChange={(e) => setModPass(e.target.value)} />
-      <button onClick={(e) =>{
-        e.preventDefault();
-        const userIndex = users.findIndex((u) => u.id === user.id);
-        const updatedUsers = [...users];
-        updatedUsers.splice(userIndex, 1, { ...user, username: modUser, password: modPass });
-        setUsers(updatedUsers);
-        }}>Edit</button>
-    </tr>
-));
+  const showUsers = users.map((user) => (
+      <tr key={user.id}>
+        <td>{user.id}</td>
+        <td>{user.fullname}</td>
+        <td>{user.username}</td>
+        <td>{user.password}</td>
+        <input onChange={(e) => setModUser(e.target.value)} />
+        <input onChange={(e) => setModPass(e.target.value)} />
+        <button onClick={(e) =>{
+          e.preventDefault();
+          const userIndex = users.findIndex((u) => u.id === user.id);
+          const updatedUsers = [...users];
+          updatedUsers.splice(userIndex, 1, { ...user, username: modUser, password: modPass });
+          setUsers(updatedUsers);
+          }}>Edit</button>
+      </tr>
+  ));
   return (
     <div className="Ruben">
+      <div className="nav-bar">
+        <button onClick={() => {setCurrentPage("Home")}}>Home</button>
+        <button onClick={() => {setCurrentPage("Cards")}}>Cards</button>
+        <button onClick={() => {setCurrentPage("Dany")}}>Dany</button>
+        <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
+      </div>
       <h1>Modificación de Datos del Usuario</h1>
-      <form onSubmit={handleFormSubmit}>
-        <input type="text" name="name" placeholder="Nombre" value={userData.name} onChange={handleInputChange} required />
-        <input type="email" name="email" placeholder="Correo Electrónico" value={userData.email} onChange={handleInputChange} required />
-        <button type="submit">Guardar Cambios</button>
-      </form><br />
       <table>
         <tr>
           <th> ID </th>
@@ -542,8 +552,10 @@ const showUsers = users.map((user) => (
           <th>Username</th>
           <th>Password</th>
         </tr>
-        {showUsers}
+        {showUsers}<br />
       </table>
+      <button onClick={() => setCurrentPage("Login")}>Log out</button>
+      <button onClick={() => setCurrentPage("Home")}>Home page</button>
     </div>
   );
 }

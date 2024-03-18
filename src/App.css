@@ -26,12 +26,25 @@ body{
     width: 100%;
     box-sizing: border-box;
   }
+  button{
+    color: black;
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #dddddd;
+    font-size: 1rem; 
+    width: 100%;
+    box-sizing: border-box;
+    margin: 7px;
+  }
 }
 .cards-list{
   text-align: center;
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+  width: 100%;
+}
+.cards-list-body{
   width: 50%;
 }
 .cards-showcards{
@@ -110,9 +123,9 @@ body{
     font-size: 24px;
   }
   button:hover {
-    background-color: #04AA6D; /* Green */
+    background-color: #000000; /* Green */
     color: white;
-    box-shadow: 0 12px 16px 0 rgba(0, 217, 255, 0.24), 0 17px 50px 0 rgba(0, 217, 255, 0.24);
+    box-shadow: 0 12px 16px 0 #333333, 0 17px 50px 0 #333333;
   }
 }
 
@@ -127,9 +140,9 @@ body{
     color: white;
   }
   button:hover {
-    background-color: #04AA6D; /* Green */
+    background-color: #727272;
     color: white;
-    box-shadow: 0 12px 16px 0 rgba(0, 217, 255, 0.24), 0 17px 50px 0 rgba(0, 217, 255, 0.24);
+    box-shadow: 0 8px 16px 0 #333333, 0 12px 50px 0 #333333;
   }
   input{
     color: black;
@@ -156,9 +169,9 @@ body{
     user-select: none; /* disabled text selection to prevent unintended behavior when clicking the button */
     box-sizing: border-box; /* added to make sure the button has consistent width and height */
     &:hover {
-      background-color: #4cf9ff; 
+      background-color: #727272; 
       color: white;
-      box-shadow: 0 8px 16px 0 rgba(0, 119, 125, 0.24), 0 12px 50px 0 rgba(0, 119, 125, 0.24); /* adjusted box-shadow to make it look more subtle */
+      box-shadow: 0 8px 16px 0 #00777d3d, 0 12px 50px 0 rgba(0, 119, 125, 0.24); /* adjusted box-shadow to make it look more subtle */
     }
   }
 }
@@ -188,17 +201,15 @@ body{
   align-items: center;
   margin: auto;
 }
-.Ruben{
+.mod-user{
   text-align: center;
   justify-content: center;
   table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-  }
-  
+  }  
   td, th {
-    border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
   }
@@ -208,6 +219,27 @@ body{
   }
 }
 
+.mod-user-input{
+  input{
+    color: black;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #dddddd;
+    font-size: 1rem; 
+    width: 40%;
+    box-sizing: border-box;
+  }
+  button{
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #dddddd;
+    font-size: 1rem; 
+    box-sizing: border-box;
+    margin: 7px;
+    width: 10%;
+  }
+}
 
 .user{
   display: flex;

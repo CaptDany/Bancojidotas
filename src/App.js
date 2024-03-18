@@ -140,8 +140,10 @@ function Cards({setCurrentPage}) {
           <button onClick={() => createNewCard(cardNumber)}>Create New Card</button>
           <button onClick={deleteCard}>Delete Card</button><br />
         </div>
-        <div className="cards-list">
-          {showCards}
+        <div className="cards-list-body">
+          <div className="cards-list">
+            {showCards}
+          </div>
         </div>
       </div>
     </>
@@ -521,25 +523,27 @@ function UserModification({
 }) {
   const [modUser, setModUser] = useState("");
   const [modPass, setModPass] = useState("");
-  const showUsers = users.map((user) => (
-      <tr key={user.id}>
-        <td>{user.id}</td>
+
+
+
+  const showUsers = users.map((user, index) => (
+      <tr key={index}>
+        <td>{index}</td>
         <td>{user.fullname}</td>
         <td>{user.username}</td>
         <td>{user.password}</td>
-        <input onChange={(e) => setModUser(e.target.value)} />
-        <input onChange={(e) => setModPass(e.target.value)} />
+        <input placeholder="Username" onChange={(e) => setModUser(e.target.value)} />
+        <input placeholder="Password" onChange={(e) => setModPass(e.target.value)} />
         <button onClick={(e) =>{
           e.preventDefault();
-          const userIndex = users.findIndex((u) => u.id === user.id);
           const updatedUsers = [...users];
-          updatedUsers.splice(userIndex, 1, { ...user, username: modUser, password: modPass });
+          updatedUsers.splice(index, 1, { ...user, username: modUser, password: modPass });
           setUsers(updatedUsers);
           }}>Edit</button>
       </tr>
   ));
   return (
-    <div className="Ruben">
+    <div className="mod-user">
       <div className="nav-bar">
         <button onClick={() => {setCurrentPage("Home")}}>Home</button>
         <button onClick={() => {setCurrentPage("Cards")}}>Your cards</button>
@@ -547,6 +551,7 @@ function UserModification({
         <button onClick={() => setCurrentPage("Ruben")}>Update account</button>
         <button onClick={() => {setCurrentPage("Login")}}>Log out</button>
       </div>
+      <div className="mod-user-input">
       <h1>Modificación de Datos del Usuario</h1>
       <table>
         <tr>
@@ -557,6 +562,7 @@ function UserModification({
         </tr>
         {showUsers}<br />
       </table>
+      </div>
     </div>
   );
 }

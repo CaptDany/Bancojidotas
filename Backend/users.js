@@ -3,6 +3,9 @@ function addUser(users, user) {
     users.push(user);
     return users;
 }
+
+
+
 //calling the function with some data
 let users = [
   { name: 'John', age: 30 },

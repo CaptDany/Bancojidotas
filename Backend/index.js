@@ -1,14 +1,27 @@
-const http = require('http');
-const addUser = require('./users');
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-// Create server
+const mongoDBURL = 'mongodb+srv://alexismartinez3122:fcesujri6UcZNzaT@bank.k534hfo.mongodb.net/?retryWrites=true&w=majority';
+const app = express();
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('addUser');
+app.use(express.json());
+app.use(cors());
+
+app.get('/', (req, res) => {
+    console.log(req);
+    return res.status(234).send('Welcome BLUD');
 });
 
-server.listen(3000, () => {
-    console.log('Server running on port 3000');
-});
+
+
+mongoose.connect(mongoDBURL)
+    .then(() => {
+        console.log("Connected to MongoDB")
+        app.listen(3001, (req, res) => {
+            console.log(`Server running on port ${process.env.PORT}`);
+        })
+    })
+    .catch(console.error)
+

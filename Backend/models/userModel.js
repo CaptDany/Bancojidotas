@@ -4,11 +4,19 @@ const userSchema = mongoose.Schema(
     {
         firstname:{
             type: String,
-            required: true
+            required: false
             },
         lastname:{
             type: String,
-            required: true
+            required: false
+            },
+        username:{
+            type: String,
+            required: false
+            },
+        password:{
+            type: String,
+            required: false
             }
     }
 );
@@ -35,6 +43,9 @@ const userSchema = mongoose.Schema(
 //             type: String,
 //             required: true
 //         },
+            // account:{
+            //     type: mongoose.Schema.Types.ObjectId,
+            // }.
 //         cardNumber:{
 //             type: String,
 //             required: true

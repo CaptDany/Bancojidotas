@@ -15,14 +15,30 @@ app.get('/', (req, res) => {
     return res.status(234).send('Welcome BLUD');
 });
 
-app.get('/users', (req,res => {
+app.get('/users', async (req,res) => {
     try {
-        if()
+
+        const users = await User.find();
+        return res.status(200).json({
+            count: users.length,
+            data: users
+        });
     } catch (error) {
         console.log(error.message);
-
+        res.status(500).json({message: error.message});
     }
-}))
+});
+
+app.get('/users/:id', async (req,res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+        return res.status(200).json(user);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({message: error.message});
+    }
+});
 // Route for a new user
 app.post('/user', async (req, res) => {
     try {

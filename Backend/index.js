@@ -2,12 +2,15 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { PORT, mongoDBURL } from './config.js';
-import { User } from './models/userModel.js'
+import userRoute from './routes/userRoute.js';
+import cardRoute from './routes/cardRoute.js';
+
 
 
 const app = express();
-
+//Middleware for parsing request body
 app.use(express.json());
+//Middleware for handling CORS policy
 app.use(cors());
 
 app.get('/', (req, res) => {
@@ -15,53 +18,9 @@ app.get('/', (req, res) => {
     return res.status(234).send('Welcome BLUD');
 });
 
-app.get('/users', async (req,res) => {
-    try {
 
-        const users = await User.find();
-        return res.status(200).json({
-            count: users.length,
-            data: users
-        });
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message: error.message});
-    }
-});
-
-app.get('/users/:id', async (req,res) => {
-    try {
-        const { id } = req.params;
-        const user = await User.findById(id);
-        return res.status(200).json(user);
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({message: error.message});
-    }
-});
-// Route for a new user
-app.post('/user', async (req, res) => {
-    try {
-        if(
-            !req.body.firstName ||
-            !req.body.lastName 
-        ){
-            return res.status(400).json({
-                message: 'Please provide a first and last name'
-            });
-        };
-        const newUser = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        };
-        const user = await User.create(newUser);
-        return res.status(201).json(user);
-    } catch (error) {
-        
-    };
-});
-
-
+app.use('/user', userRoute);
+app.use('/card', cardRoute);
 mongoose.connect(mongoDBURL)
     .then(() => {
         console.log("Connected to MongoDB")

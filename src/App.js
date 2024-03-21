@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useState,useEffect } from "react";
 import Login from './Components/Login.tsx';
+import axios from 'axios';
 
 
 function App() {
@@ -233,7 +234,10 @@ function Register({
   fullName,
   setFullName
 }) {
+
   const [id, setId] = useState(0);
+
+
   return (
     <div className="Form">
       <div className="Form-head">
@@ -281,6 +285,20 @@ function Register({
                   },
                 ]);
                 setId(id + 1);
+                const data = [
+                  id,
+                  fullName,
+                  username,
+                  password
+                ]
+                axios
+                .post('http://localhost:3001/user', data)
+                .then((response) => {
+                  console.log(response);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
                 console.log(users);
               }}
             >

@@ -4,7 +4,7 @@ import { User } from '../models/userModel.js';
 const router = express.Router();
 
 //get all users
-router.get('/users', async (req,res) => {
+router.get('/user', async (req,res) => {
     try {
 
         const users = await User.find();
@@ -19,7 +19,7 @@ router.get('/users', async (req,res) => {
 });
 
 //get a single user
-router.get('/users/:id', async (req,res) => {
+router.get('/user/:id', async (req,res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
@@ -43,8 +43,10 @@ router.post('/user', async (req, res) => {
             });
         };
         const newUser = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
+            id: req.body.id,
+            fullname: req.body.fullname,
+            username: req.body.username,
+            password: req.body.password
         };
         const user = await User.create(newUser);
         return res.status(201).json(user);

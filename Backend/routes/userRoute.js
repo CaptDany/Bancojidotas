@@ -4,7 +4,7 @@ import { User } from '../models/userModel.js';
 const router = express.Router();
 
 //get all users
-router.get('/user', async (req,res) => {
+router.get('/', async (req,res) => {
     try {
 
         const users = await User.find();
@@ -19,7 +19,7 @@ router.get('/user', async (req,res) => {
 });
 
 //get a single user
-router.get('/user/:id', async (req,res) => {
+router.get('/:id', async (req,res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(id);
@@ -31,12 +31,15 @@ router.get('/user/:id', async (req,res) => {
 });
 
 //create a new user
-router.post('/user', async (req, res) => {
+router.post('/', async (req, res) => {
+    const reqbody = JSON.stringify(req.body);
+    console.log(`req.body: ${reqbody}`);
     try {
         if(
             !req.body.id ||
-            !req.body.firstName ||
-            !req.body.lastName 
+            !req.body.fullname ||
+            !req.body.username ||
+            !req.body.password
         ){
             return res.status(400).json({
                 message: 'Please provide a first and last name'
@@ -57,7 +60,7 @@ router.post('/user', async (req, res) => {
 });
 
 //update a user
-router.put('/user/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         if(
             !req.body.id ||
@@ -81,7 +84,7 @@ router.put('/user/:id', async (req, res) => {
 });
 
 //Delete a user
-router.delete('/user/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);

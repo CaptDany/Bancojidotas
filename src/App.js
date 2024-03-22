@@ -236,7 +236,16 @@ function Register({
 }) {
 
   const [id, setId] = useState(0);
-
+  // const handleSaveUser = () => {
+  //   const data =[
+  //     {
+  //       id: id,
+  //       fullname: fullName,
+  //       username: username,
+  //       password: password
+  //     }
+  //   ]
+  // }
 
   return (
     <div className="Form">
@@ -275,22 +284,14 @@ function Register({
                 e.preventDefault();
                 setUsername(username);
                 setPassword(password);
-                setUsers((users) => [
-                  ...users,
-                  {
-                    fullname: fullName,
-                    username: username,
-                    password: password,
-                    id: id
-                  },
-                ]);
                 setId(id + 1);
-                const data = [
-                  id,
-                  fullName,
-                  username,
-                  password
-                ]
+                const data = {
+                  id: id,
+                  fullname: fullName,
+                  username: username,
+                  password: password
+                };
+                console.log(`data: ${data}`);
                 axios
                 .post('http://localhost:3001/user', data)
                 .then((response) => {

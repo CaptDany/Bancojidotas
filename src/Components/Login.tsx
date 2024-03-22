@@ -1,15 +1,31 @@
 import "../App.css";
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function Login({
     setCurrentPage,
     users,
+    setUsers,
     username,
     setUsername,
     password,
     setPassword,
     setCurrentUser
   }) {
+    //useEffect to get user data using axios
+    useEffect(() => {
+      const getUserData = async () => {
+        try {
+          const response = await axios.get("http://localhost:3001/user");
+          setUsers(response.data.data);
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      getUserData();
+    }, []);
+
     return (
       <div className="Form">
         <div className="Form-head">

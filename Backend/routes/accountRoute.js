@@ -1,5 +1,5 @@
 import express from 'express';
-import { Card } from '../models/cardModel.js';
+import { Account } from '../models/accountModel.js';
 
 const router = express.Router();
 
@@ -7,10 +7,10 @@ const router = express.Router();
 router.get('/', async (req,res) => {
     try {
 
-        const cards = await Card.find();
+        const account = await Account.find();
         return res.status(200).json({
-            count: cards.length,
-            data: cards
+            count: account.length,
+            data: account
         });
     } catch (error) {
         console.log(error.message);
@@ -22,8 +22,8 @@ router.get('/', async (req,res) => {
 router.get('/:id', async (req,res) => {
     try {
         const { id } = req.params;
-        const cards = await Card.findById(id);
-        return res.status(200).json(cards);
+        const account = await Account.findById(id);
+        return res.status(200).json(account);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message});
@@ -35,22 +35,20 @@ router.post('/', async (req, res) => {
     try {
         if(
             !req.body.id ||
-            !req.body.cardNumber ||
             !req.body.accountNumber ||
-            !req.body.balance
+            !req.body.transferNumber
         ){
             return res.status(400).json({
-                message: 'Please provide the card number, account number and balance'
+                message: 'Please provide an account number and transfer number'
             });
         };
-        const newCard = {
+        const newAccount = {
             id: req.body.id,
-            cardNumber: req.body.cardNumber,
             accountNumber: req.body.accountNumber,
-            balance: req.body.balance
+            transferNumber: req.body.transferNumber,
         };
-        const cards = await Card.create(newCard);
-        return res.status(201).json(cards);
+        const account = await Account.create(newAccount);
+        return res.status(201).json(account);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message});
@@ -62,20 +60,19 @@ router.put('/:id', async (req, res) => {
     try {
         if(
             !req.body.id ||
-            !req.body.cardNumber ||
             !req.body.accountNumber ||
-            !req.body.balance
+            !req.body.transferNumber
         ){
             return res.status(400).json({
-                message: 'Please provide the card number, account number and balance'
+                message: 'Please provide an account number and transfer number'
             });
         };
         const { id } = req.params;
-        const card = await Card.findByIdAndUpdate(id, req.body);
-        if (!card) {
-            return res.status(404).json({message: 'Card not found'});
+        const account = await Account.findByIdAndUpdate(id, req.body);
+        if (!account) {
+            return res.status(404).json({message: 'Account not found'});
         }
-        return res.status(200).json(card);
+        return res.status(200).json(account);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message});
@@ -86,11 +83,11 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const card = await Card.findByIdAndDelete(id);
-        if (!card) {
-            return res.status(404).json({message: 'Card not found'});
+        const account = await Account.findByIdAndDelete(id);
+        if (!account) {
+            return res.status(404).json({message: 'Account not found'});
         }
-        return res.status(200).json(card);
+        return res.status(200).json(account);
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message});

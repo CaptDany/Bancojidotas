@@ -1,20 +1,20 @@
 import mongoose from 'mongoose';
 
-const cardSchema = mongoose.Schema(
+const accountSchema = mongoose.Schema(
     {
         id:{
             type: Number,
             required: true
         },
-        cardNumber:{
+        accountNumber:{
             type: String,
             required: true
         },
-        balance:{
-            type: Number,
+        transferNumber:{
+            type: String,
             required: true
-        },
+        }
     }
 );
 
-export const Card = mongoose.model('Card', cardSchema)
+export const Account = mongoose.model('Account', accountSchema)

@@ -4,6 +4,7 @@ import cors from 'cors';
 import { PORT, mongoDBURL } from './config.js';
 import userRoute from './routes/userRoute.js';
 import cardRoute from './routes/cardRoute.js';
+import accountRoute from './routes/accountRoute.js';
 
 
 
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', userRoute);
 app.use('/card', cardRoute);
+app.use('/account', accountRoute);
 mongoose.connect(mongoDBURL)
     .then(() => {
         console.log("Connected to MongoDB")

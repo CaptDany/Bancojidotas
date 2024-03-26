@@ -1,6 +1,30 @@
-*{
-  font-family: Arial, Helvetica, sans-serif;
+/*General Stuff*/
+
+* {
+  font-family: "Anybody", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  /*100 - 900*/
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
+
+h1 {
+  font-family: "Secular One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p {
+  font-weight: 300;
+}
+
+button {
+  font-weight: 400;
+}
+
+/*
 body{
   background-color: #0e0e1000;
 }
@@ -112,7 +136,7 @@ body{
   justify-content: center;
   button{
     margin: 5px;
-    background-color: #e7e7e7; /* Green */
+    background-color: #e7e7e7;
     border: none;
     border-radius: 4px;
     color: black;
@@ -123,7 +147,7 @@ body{
     font-size: 24px;
   }
   button:hover {
-    background-color: #000000; /* Green */
+    background-color: #000000;
     color: white;
     box-shadow: 0 12px 16px 0 #333333, 0 17px 50px 0 #333333;
   }
@@ -155,23 +179,23 @@ body{
   }
   button{
     color: black;
-    display: inline-block; /* changed to inline-block for better alignment with input field */
+    display: inline-block;
     text-align: center;
     justify-content: center;
-    padding: 10px 20px; /* added some padding to make the button more visually appealing */
-    margin: 10px; /* added some margin to separate the button from other elements */
-    border-radius: 5px; /* added some border-radius to make the button look more modern */
-    cursor: pointer; /* added cursor property to change the cursor when hovering over the button */
-    transition: background-color 0.3s ease; /* added a transition effect to the background-color property when hovering over the button */
-    border: none; /* removed border to make the button look cleaner */
-    outline: none; /* removed outline to make the button look cleaner */
-    font-size: 1rem; /* changed font-size to better match the input field's font-size */
-    user-select: none; /* disabled text selection to prevent unintended behavior when clicking the button */
-    box-sizing: border-box; /* added to make sure the button has consistent width and height */
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    user-select: none;
+    box-sizing: border-box;
     &:hover {
       background-color: #727272; 
       color: white;
-      box-shadow: 0 8px 16px 0 #00777d3d, 0 12px 50px 0 rgba(0, 119, 125, 0.24); /* adjusted box-shadow to make it look more subtle */
+      box-shadow: 0 8px 16px 0 #00777d3d, 0 12px 50px 0 rgba(0, 119, 125, 0.24);
     }
   }
 }
@@ -331,3 +355,4 @@ body{
       margin: 7px;
   }
 }
+ */
